@@ -37,15 +37,6 @@ body {
 }
 
 /* ---------- Canvas / Container / Header ---------- */
-.award {
-    margin-top: 15px;
-    padding: 10px;
-    background-color: #2e2e2e;
-    border-radius: 8px;
-}
-
-.award h3 { color: white; margin-bottom: 5px; }
-.award p { color: #cccccc; }
 
 canvas {
     position: fixed;
@@ -96,21 +87,21 @@ header {
 .vertical-divider {
     width: 1px;
     background-color: #cccccc;
-    height: 100px;
+    height: 140px;
     margin: 0 20px;
 }
 
 .content-links { display: flex; flex-direction: column; }
-.content-links a { color: #ffc107; font-size: 0.9em; }
+.content-links a { color: #ffc107; margin-bottom: 5px; font-size: 1 em; }
 
 .profile-container { display: flex; align-items: center; }
 
 header img {
-    border-radius: 50%;
-    width: 140px;
-    height: 140px;
+    border-radius: 20%;
+    width: 160px;
+    height: 200px;
     object-fit: cover;
-    border: 3px solid #ffcc00;
+    border: 2px solid #ffcc00;
     margin-right: 20px;
 }
 
@@ -133,23 +124,6 @@ header img {
     margin-bottom: 12px;
     border-bottom: 2px solid #555555;
     padding-bottom: 5px;
-}
-
-/* ---------- Skills / Lists ---------- */
-.subsection { margin-top: 10px; }
-.subsection-title { font-size: 1.2em; color: #e0e0e0; margin-bottom: 8px; }
-.subsection p { margin-bottom: 8px; color: #e0e0e0; }
-
-.skills { margin-top: 15px; }
-.skills span {
-    display: inline-block;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    padding: 8px 15px;
-    background-color: #353535;
-    border-radius: 15px;
-    color: #f0f0f0;
-    font-size: 0.9em;
 }
 
 /* ---------- Footer ---------- */
@@ -194,6 +168,45 @@ li { margin-bottom: 8px; }
   transition: max-height 0.5s ease;
 }
 
+.cg-projects-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-top: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+  scroll-behavior: smooth;
+  height: 300px;
+  align-items: stretch;
+}
+
+/* Custom scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
+.cg-projects-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.cg-projects-grid::-webkit-scrollbar-track {
+  background: rgba(50, 50, 50, 0.5);
+  border-radius: 10px;
+}
+
+.cg-projects-grid::-webkit-scrollbar-thumb {
+  background: #9fe6bf;
+  border-radius: 10px;
+  border: 2px solid rgba(50, 50, 50, 0.5);
+}
+
+.cg-projects-grid::-webkit-scrollbar-thumb:hover {
+  background: #a8f0c7;
+}
+
+/* Scrollbar styling for Firefox */
+.cg-projects-grid {
+  scrollbar-width: thin;
+  scrollbar-color: #9fe6bf rgba(50, 50, 50, 0.5);
+}
+
 .projects-grid.expanded {
   max-height: none;
 }
@@ -207,13 +220,39 @@ li { margin-bottom: 8px; }
     overflow: hidden;           /* clip children so corners stay rounded */
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     transition: transform 0.18s ease, box-shadow 0.18s ease;
+    flex-shrink: 0;
+    min-width: 280px;
+    height: 450px;
+}
+
+/* Card */
+.cg-project {
+    display: flex;
+    flex-direction: column;
+    background-color: #1d1d1d;
+    border-radius: 12px;        /* card controls the rounded corners */
+    overflow: hidden;           /* clip children so corners stay rounded */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    flex-shrink: 0;
+    width: 280px;
     height: 100%;
 }
 
-/* Hover lift */
-.project:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.45);
+/* CG project specific styling - hide info and footer, make image fill card */
+.cg-project .project-info {
+    display: none;
+}
+
+.cg-project .project-footer {
+    display: none;
+}
+
+.cg-project img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
 }
 
 /* Title bar that sits directly above the image (h3.project-header) */
@@ -292,14 +331,9 @@ li { margin-bottom: 8px; }
 .project-info a i,
 .project-footer a i { margin-right: 6px; font-size: 1em; }
 
-/* ---------- Jokes section ---------- */
-@keyframes bounceIn {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
 
-#jokes {
-    background: rgba(159, 230, 191, 0.6);
+/* #jokes {
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(8px);
     border-radius: 10px;
     padding: 20px;
@@ -307,18 +341,9 @@ li { margin-bottom: 8px; }
     color: white;
     margin-top: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+} */
 
-#jokes .section-title { color: white; }
-
-.joke p {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    font-size: 1.2em;
-    margin: 15px 0;
-    animation: bounceIn 1s ease-in-out;
-}
-
-.joke-button {
+.next-button {
     margin-top: 10px;
     padding: 10px 20px;
     background-color: #00cec9;
@@ -333,8 +358,8 @@ li { margin-bottom: 8px; }
     transition: transform 0.18s, background-color 0.18s;
 }
 
-.joke-button i { font-size: 1.5em; }
-.joke-button:hover { background-color: #00b894; transform: scale(1.06); }
+.next-button i { font-size: 1.5em; }
+.next-button:hover { background-color: #00b894; transform: scale(1.06); }
 
 /* ---------- Show More button ---------- */
 .show-more-btn {
