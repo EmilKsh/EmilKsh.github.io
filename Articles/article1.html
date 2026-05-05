@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emil Keshishian - First Article</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+    <script src="2DBallsWithCollision.js"></script>
+
+    <header>
+        <div style="padding: 20px; text-align: center;">
+            <h1>First Article</h1>
+            <p><a href="../articles.html" style="color: #ffc107;"><i class="fa fa-arrow-left"></i> Back to Articles</a> | <a href="../index.html" style="color: #ffc107;"><i class="fa fa-home"></i> Back to Homepage</a></p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <div id="article-content">
+                <!-- Markdown content will be rendered here -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Last Updated May 2026</p>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Back to Top</button>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        document.getElementById('article-content').innerHTML = marked.parse(`
+# First Article
+
+This is my first article written in Markdown!
+
+## Why Markdown?
+
+- Easy to write
+- Readable
+- Versatile
+
+You can add **bold**, *italic*, [links](https://example.com), and more!
+
+## Code Example
+
+\`\`\`javascript
+console.log('Hello, World!');
+\`\`\`
+
+Enjoy reading!
+
+*Published on: September 2025*
+        `);
+    </script>
+</body>
+</html>
