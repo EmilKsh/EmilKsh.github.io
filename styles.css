@@ -51,7 +51,7 @@ canvas {
 .container {
     position: relative;
     z-index: 1;
-    padding: 20px;
+    padding: 280px 20px 50px;
     max-width: 1024px;
     margin: 0 auto;
     color: white;
@@ -60,12 +60,20 @@ canvas {
 
 /* ---------- Page Header ---------- */
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
-    background-color: #2e2e2e;
-    border-bottom: 2px solid #444;
+    background: rgba(46, 46, 46, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
 }
 
 .header-container {
