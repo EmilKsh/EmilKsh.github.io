@@ -134,7 +134,7 @@ var canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("myCanvas
 
         var PhysicsWorld = {
             dt: 1/60,
-            substeps: 32,
+            substeps: 4,
             sdt: this.dt/this.substeps,
             WorldSize: [simWidth, simHeight],
             g: 0,
@@ -149,10 +149,10 @@ var canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("myCanvas
         }
 
         function WorldSetup(){
-            var NumberOfBalls = 100;
-            var MinBallSize = 0.2;
-            var MaxBallSize = 0.4;
-            var MaxVelocity = 10;
+            var NumberOfBalls = 200;
+            var MinBallSize = 0.1;
+            var MaxBallSize = 0.3;
+            var MaxVelocity = 4;
             // var BallDensity = 1;
             var Allowed = true;
             PhysicsWorld.balls = [];
@@ -263,6 +263,17 @@ var canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("myCanvas
             simulate();
             draw();
             requestAnimationFrame(update);
+        }
+        
+        function UpdateAspectRatio(){
+            canvas.width = window.innerWidth - 20;
+            canvas.height = window.innerHeight - 20;
+        }
+        
+        function AddVelocity(vel){
+            for (const ball of PhysicsWorld.balls){
+                ball.vel = ball.vel.add(vel);
+            }
         }
 
         WorldSetup();
