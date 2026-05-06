@@ -268,6 +268,9 @@ var canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("myCanvas
         function UpdateAspectRatio(){
             canvas.width = window.innerWidth - 20;
             canvas.height = window.innerHeight - 20;
+            cScale = Math.min(canvas.width, canvas.height) / simMinWidth;
+            simWidth = canvas.width / cScale;
+            simHeight = canvas.height / cScale;
         }
         
         function AddVelocity(vel){
@@ -275,6 +278,8 @@ var canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("myCanvas
                 ball.vel = ball.vel.add(vel);
             }
         }
+
+        window.addEventListener('resize', UpdateAspectRatio);
 
         WorldSetup();
         update();
