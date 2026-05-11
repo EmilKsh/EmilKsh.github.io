@@ -52,7 +52,7 @@ canvas {
 .container {
     position: relative;
     z-index: 1;
-    padding: 280px 20px 50px;
+    padding: 20px 20px 50px;
     max-width: 1024px;
     margin: 0 auto;
     color: white;
@@ -61,9 +61,7 @@ canvas {
 
 /* ---------- Page Header ---------- */
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: static;
     width: 100%;
     display: flex;
     justify-content: center;
