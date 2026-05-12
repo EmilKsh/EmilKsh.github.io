@@ -232,14 +232,19 @@ var canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("myCanvas
         }
 
         // drawing --------------
+        function getBallColor() {
+            const theme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('theme') || 'dark';
+            return theme === 'light' ? 'rgb(220, 220, 220)' : 'rgb(255 204 0)';
+        }
+
         function draw(){
             c.clearRect(0,0,canvas.width, canvas.height);
-            c.fillStyle = "#FF0000";
+            const ballColor = getBallColor();
 
             for (const ball of PhysicsWorld.balls){
                 c.beginPath();
                 c.arc(cX(ball.pos), cY(ball.pos), ball.rad*cScale, 0, 2*Math.PI);
-                c.fillStyle = 'rgb(255 204 0)';
+                c.fillStyle = ballColor;
                 c.fill();
             }
         }

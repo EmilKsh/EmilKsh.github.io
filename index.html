@@ -11,6 +11,7 @@
 <body>
     <canvas id="myCanvas"></canvas>
     <script src="2DBallsWithCollision.js"></script>
+    <script src="theme.js"></script>
     <header>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
         <div class="header-container">
@@ -31,7 +32,13 @@
                 </div>
             </div>
             <div class="vertical-divider"></div> <!-- Thin vertical line -->
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
             <nav class="content-links">
+                <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu">
+                    <i class="fas fa-times"></i>
+                </button>
                 <a href="articles.html">Articles</a>
                 <a href="#bio">Bio</a>
                 <!-- <a href="#skills">Skills</a> -->
@@ -40,6 +47,9 @@
                 <!-- <a href="#awards">Awards</a> -->
                 <a href="#quotes">more</a>
                 <!-- <a href="#contact">Contact</a> -->
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
             </nav>
         </div>
     </header>
