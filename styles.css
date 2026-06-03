@@ -2838,11 +2838,13 @@ a.article-card-link:hover {
     max-width: 860px;
     margin: 0;
     padding: clamp(26px, 5vw, 54px);
-    border: 1px solid rgba(17, 24, 39, 0.08);
+    border: 1px solid rgba(114, 224, 196, 0.14);
     border-radius: 10px;
-    background: #ffffff;
-    color: #111827;
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+    background:
+        linear-gradient(180deg, rgba(114, 224, 196, 0.035), transparent 42%),
+        #0d1419;
+    color: #e8eef1;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
 }
@@ -2855,10 +2857,12 @@ a.article-card-link:hover {
 }
 
 [data-theme="light"] .article-reader-section {
-    border-color: rgba(255, 255, 255, 0.08);
-    background: #111827;
-    color: #f7fafc;
-    box-shadow: 0 24px 62px rgba(15, 23, 42, 0.16);
+    border-color: rgba(8, 126, 116, 0.14);
+    background:
+        linear-gradient(180deg, rgba(8, 126, 116, 0.035), transparent 45%),
+        #f7fbfa;
+    color: #172033;
+    box-shadow: 0 24px 62px rgba(15, 23, 42, 0.12);
 }
 
 [data-theme="light"] .article-reader-sidebar {
@@ -2888,13 +2892,13 @@ a.article-card-link:hover {
 .article-reader-section .markdown-body h2 {
     margin-top: 2.2em;
     padding-top: 0.35em;
-    border-top: 1px solid rgba(17, 24, 39, 0.1);
+    border-top: 1px solid rgba(159, 226, 191, 0.12);
     font-size: clamp(1.45rem, 3vw, 2.1rem);
 }
 
 .article-reader-section .markdown-body h3 {
     margin-top: 1.8em;
-    color: #0f766e;
+    color: #72e0c4;
     font-size: 1.12rem;
 }
 
@@ -2907,11 +2911,11 @@ a.article-card-link:hover {
 }
 
 [data-theme="light"] .article-reader-section .markdown-body h2 {
-    border-top-color: rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(8, 126, 116, 0.12);
 }
 
 [data-theme="light"] .article-reader-section .markdown-body h3 {
-    color: #9fe2bf;
+    color: #087e74;
 }
 
 .article-reader-section .markdown-body p {
@@ -2919,53 +2923,61 @@ a.article-card-link:hover {
 }
 
 .article-reader-section .markdown-body a {
-    color: #0f766e;
+    color: #72e0c4;
     font-weight: 400;
 }
 
 [data-theme="light"] .article-reader-section .markdown-body a {
-    color: #9fe2bf;
+    color: #087e74;
 }
 
 .article-reader-section .markdown-body hr {
     height: 1px;
     margin: 2.4em 0;
     border: 0;
-    background: linear-gradient(90deg, transparent, rgba(15, 118, 110, 0.42), transparent);
+    background: linear-gradient(90deg, transparent, rgba(114, 224, 196, 0.38), transparent);
 }
 
 .article-reader-section .markdown-body code {
     border-radius: 5px;
-    background: rgba(15, 118, 110, 0.08);
+    background: rgba(114, 224, 196, 0.08);
     padding: 0.1em 0.32em;
     color: inherit;
     font-size: 0.9em;
 }
 
+[data-theme="light"] .article-reader-section .markdown-body hr {
+    background: linear-gradient(90deg, transparent, rgba(8, 126, 116, 0.32), transparent);
+}
+
+[data-theme="light"] .article-reader-section .markdown-body code {
+    background: rgba(8, 126, 116, 0.08);
+}
+
 .article-reader-section .markdown-body .math-display,
 .article-reader-section .markdown-body mjx-container[display="true"] {
     margin: 1.3em 0;
-    border: 1px solid rgba(15, 118, 110, 0.12);
+    border: 1px solid rgba(159, 226, 191, 0.16);
     border-radius: 8px;
-    background: rgba(15, 118, 110, 0.035);
+    background: rgba(159, 226, 191, 0.06);
     padding: 1em;
 }
 
 [data-theme="light"] .article-reader-section .markdown-body .math-display,
 [data-theme="light"] .article-reader-section .markdown-body mjx-container[display="true"] {
-    border-color: rgba(159, 226, 191, 0.16);
-    background: rgba(159, 226, 191, 0.06);
+    border-color: rgba(15, 118, 110, 0.12);
+    background: rgba(15, 118, 110, 0.035);
 }
 
 .article-reader-section .markdown-body .callout {
     margin: 1.4em 0;
-    border: 1px solid #9dccff;
-    border-left: 5px solid #3182ce;
+    border: 1px solid rgba(114, 224, 196, 0.22);
+    border-left: 5px solid #72e0c4;
     border-radius: 8px;
-    background: #eef6ff;
-    color: #172033;
+    background: rgba(114, 224, 196, 0.075);
+    color: #e8fffb;
     padding: 14px 16px;
-    box-shadow: 0 10px 26px rgba(49, 130, 206, 0.08);
+    box-shadow: 0 10px 26px rgba(114, 224, 196, 0.06);
 }
 
 .article-reader-section .markdown-body .callout-title {
@@ -2993,25 +3005,25 @@ a.article-card-link:hover {
 
 .article-reader-section .markdown-body .callout-attention,
 .article-reader-section .markdown-body .callout-warning {
-    border-color: #f6c35b;
-    border-left-color: #d97706;
-    background: #fff7e6;
-    color: #2d2111;
+    border-color: #8a5b12;
+    border-left-color: #f59e0b;
+    background: #2a2112;
+    color: #fff6df;
 }
 
 [data-theme="light"] .article-reader-section .markdown-body .callout {
-    background: #172033;
-    border-color: #2f5e93;
-    border-left-color: #63b3ed;
-    color: #f0f7ff;
+    background: rgba(8, 126, 116, 0.07);
+    border-color: rgba(8, 126, 116, 0.2);
+    border-left-color: #087e74;
+    color: #173331;
 }
 
 [data-theme="light"] .article-reader-section .markdown-body .callout-attention,
 [data-theme="light"] .article-reader-section .markdown-body .callout-warning {
-    background: #2a2112;
-    border-color: #8a5b12;
-    border-left-color: #f59e0b;
-    color: #fff6df;
+    background: #fff7e6;
+    border-color: #f6c35b;
+    border-left-color: #d97706;
+    color: #2d2111;
 }
 
 .article-reader-footer {
