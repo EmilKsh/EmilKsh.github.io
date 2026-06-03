@@ -232,19 +232,30 @@ var canvas = /** @type {HTMLCanvasElement} */ (document.getElementById("myCanvas
         }
 
         // drawing --------------
-        function getBallColor() {
+        function getBallColor(alpha = 1) {
             const theme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('theme') || 'dark';
-            return theme === 'light' ? 'rgb(220, 220, 220)' : 'rgb(255 204 0)';
+            return theme === 'light'
+                ? `rgba(8, 126, 116, ${alpha})`
+                : `rgba(114, 224, 196, ${alpha})`;
+        }
+
+        function getEdgeFade(x, y) {
+            const edgeFadeDistance = Math.min(canvas.width, canvas.height) * 0.18;
+            const edgeDistance = Math.min(x, y, canvas.width - x, canvas.height - y);
+            return Math.max(0, Math.min(1, edgeDistance / edgeFadeDistance));
         }
 
         function draw(){
             c.clearRect(0,0,canvas.width, canvas.height);
-            const ballColor = getBallColor();
 
             for (const ball of PhysicsWorld.balls){
+                const x = cX(ball.pos);
+                const y = cY(ball.pos);
+                const alpha = 0.1 + getEdgeFade(x, y) * 0.28;
+
                 c.beginPath();
-                c.arc(cX(ball.pos), cY(ball.pos), ball.rad*cScale, 0, 2*Math.PI);
-                c.fillStyle = ballColor;
+                c.arc(x, y, ball.rad*cScale, 0, 2*Math.PI);
+                c.fillStyle = getBallColor(alpha);
                 c.fill();
             }
         }

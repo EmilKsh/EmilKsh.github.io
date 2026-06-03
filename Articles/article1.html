@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emil Keshishian - First Article</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <canvas id="myCanvas"></canvas>
-    <script src="2DBallsWithCollision.js"></script>
+    <script src="../2DBallsWithCollision.js"></script>
 
     <header>
         <div style="padding: 20px; text-align: center;">
@@ -19,9 +19,9 @@
         </div>
     </header>
 
-    <div class="container">
-        <section class="section">
-            <div id="article-content">
+    <div class="container article-container">
+        <section class="section article-section">
+            <div id="article-content" class="markdown-body">
                 <!-- Markdown content will be rendered here -->
             </div>
         </section>
@@ -34,29 +34,210 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        document.getElementById('article-content').innerHTML = marked.parse(`
-# First Article
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script>
+        const articleContent = document.getElementById('article-content');
 
-This is my first article written in Markdown!
+        const articleMarkdown = String.raw`
+## Holonomic and non-holonomic constraints
+There are two types of constraints, **Holonomic**, and **Non-Holonomic**.
+### Holonomic constraints
+Holonomic constraints are as $C(q, t)$, where $q$ is the configuration of the system and $t$ is time, and are integrable.
 
-## Why Markdown?
+An example of a holonomic constraint would be the surface of a sphere in 3D space as:
+$$
+C(q) = x^2+y^2+z^2-R^2=0
+$$
+Although holonomic constraints limit the configuration space itself, it is still possible to get velocity constraints by calculating the derivative as:
 
-- Easy to write
-- Readable
-- Versatile
+	\frac{d}{dt}C(q,t)=\frac{\partial C}{\partial q}\dot{q}+\frac{\partial C}{\partial t}
 
-You can add **bold**, *italic*, [links](https://example.com), and more!
+where $\frac{\partial C}{\partial q}=J(q,t)$ is called the **Jacobian** of the constraint (the Jacobian is orthogonal to the surface of the hyperplane of the constraint). For time-independent constraints  the Jacobian is written as $J(q)$ hence:
+$$
+\frac{d}{dt}C(q,t)=J(q)\dot{q}=0
+$$
+The operation between $J$ and $\dot{q}$ results in essentially a dot product between the rows of the Jacobian and the configuration vector. The dot product being zero means that the Jacobian is perpendicular to the velocity vector which meant the velocity vector is tangent to the constraints hyperplane.
 
-## Code Example
+> [!Attention] Holonomic vs non-holonomic constraints
+> All holonomic constraints have a velocity-level form, but not all velocity-level constraint have position-level forms. This is why non-holonomic constraints are defined!
 
-\`\`\`javascript
-console.log('Hello, World!');
-\`\`\`
+### Non-holonomic constraints
+non-holonomic constraints, constraint the movement direction rather than the position directly. They differ from holonomic constraints by being non-integrable. So it is not possible to find a function who's time derivative will become the constraint function.
 
-Enjoy reading!
+Two famous examples of non-holonomic constraints are a car moving on a plane, where it is still allowed to move everywhere on the floor, but it can only move in the direction of the wheels. So it cannot have spontaneous sideways movements. This means that non-holonomic constraints don't decrease the general degrees of freedom, they only decrease the degrees of freedom for the spontaneous movement direction.
 
-*Published on: September 2025*
-        `);
+non-holonomic constraints are shown as
+$$
+\bar{C}(q, \dot{q}) = 0
+$$
+A common type of velocity constraints are **Pfaffian** constraints, which are linear in velocity (this is not the general case with non-holonomic constraints)
+$$
+\bar{C}(q)v = u\quad or \quad A(q,t)\dot{q} - b(q, t) = 0 \rightarrow A(q,t)\dot{q} = b(q,t)
+$$
+
+where $u$ is a target velocity.
+
+> [!attention] Holonomic Pfaffian form
+> It should be noted that by differentiating every holonomic constraint a Pfaffian looking constraint can be created. But the distinction between these and real non-holonomic Pfaffian constraints is that the non-holonomic ones cannot be integrated.
+## Scleronomic and Rheonomic constraints
+
+This is a simpler classification of constraints. Scleronomic constraints are simply those with no explicit time dependence. Rheonomic constraints have explicit time dependence.
+
+---
+# Equations of constrained motion
+
+The system of equations of a constrained motion is:
+$$
+\boxed{
+\begin{align}
+&M\ddot{q} = f_i + f_e + f_c \\
+&C(q,t) = 0
+\end{align}
+}
+$$
+For a holonomic system the constraint equation is independent of time: $C(q)$.
+
+So as I was reading about this, I thought why not just differentiate $C$ twice and replace $\ddot{q}$ in the main equation like this:
+
+$$
+\begin{align}
+\rightarrow &\frac{dC}{dt} = 0 \rightarrow J\dot{q}+\frac{\partial C}{\partial t} = 0\\
+
+&\frac{d^2 C}{dt^2} = 0 \rightarrow J\ddot{q} + \dot{J}\dot{q} + \frac{\partial^2 C}{\partial t^2} = 0
+\end{align}
+$$
+So for a holonomic constraint we'd have:
+$$
+J\ddot{q} + \dot{J}\dot{q} = 0 \rightarrow J\ddot{q} = -\dot{J}\dot{q}
+$$
+and write:
+$$
+\ddot{q} = J^-\dot{J}\dot{q}
+$$
+but the thing is, $J$ is not convertible most of the time, in fact it is only convertible when the constraint fully determines the motion of the body which is not too common.
+
+The way to solve this problem is to consider the principle of virtual work. which states that the constraint force should not do work in the direction perpendicular to that of the constraint surface. And also in velocity constraints velocity should also be constraint to the constraint surface.
+$$
+f_c^Tv = 0 \quad Jv = 0
+$$
+
+So we can write $f_c = J^T \lambda$ (because constraint forces should be vectors normal to the constraint surface, so with direction J and magnitude $\lambda$.
+
+replacing $f_c$ in the equation of motion results in:
+$$
+M\ddot{q} = f_i + f_e + J^T\lambda
+$$
+Then we can write the system of equations in standard matrix (descriptor) form as:
+$$
+\begin{bmatrix}
+	M & -J^T\\ J & 0
+\end{bmatrix}
+\begin{bmatrix}
+\dot{v} \\ \lambda
+\end{bmatrix} =
+\begin{bmatrix}
+f_i + f_e \\ -\dot{J}v
+\end{bmatrix}
+$$
+Then it's possible to solve the system using [[Schur's Complement]] (simplifying the problem to the solving for $\lambda$s only instead of $\ddot{q}$s as well)
+$$
+[JM^{-1}J^T]\lambda=-GM^{-1}(f_i+f_e) - \dot{J}v
+$$
+Then the equation is solved numerically.
+
+---
+## Constraint regularization
+
+In acceleration based constraints the corrected position is computed by integrating acceleration which gives rise to numerical drift. In other words, by solving $\ddot{C} = J\ddot{q} + \dot{J}\dot{q}=0$, the curvature of the constraint hyper plane is constrained rather than the position directly, and to compute the position correction the acceleration level constraint must be integrated. This is the motivation behind the development of position-based constraints ([[PBD]]), where the positions are corrected directly and the necessary forces are estimated in a physics inspired way (physics inspired because this method is geometric in nature, and although it converges to the correct solution the forces computed using PBD might be slightly wrong compared to the acceleration level method.
+### Baumgarte stabilization
+
+One of the ways for mitigating the numerical drift is by Baumgarte's method, which is essentially adding a spring and damper to the constraint equation as
+$$
+\text{instead of: }\ddot{C} = 0 \rightarrow \ddot{C} = -k_{s} C(q) - k_{d}\dot{C}(q)
+$$
+where $k_{s}$ is the spring stiffness and $k_{d}$ is the damping coefficient. This method tries to keep the object on the constraint plane by pulling it back. The difficulty with this method is tuning the coefficients for both numerical stability and good constraint satisfaction. Also the tuned values might not generalize to a different problem and constraint setup.
+
+---
+Another problem that might occur is **ill-conditioned [[Schur complement]]** in case of large mass ratios. kinematic singularities ($\det C = 0$), or constraint redundance (closed kinematic loops).
+
+This problem could be helped by adding a small amount to the diagonal of the [[Schur complement]]
+        `;
+
+        articleContent.innerHTML = renderMarkdown(articleMarkdown);
+
+        if (window.MathJax) {
+            MathJax.startup.promise.then(() => MathJax.typesetPromise([articleContent]));
+        }
+
+        function renderMarkdown(markdown) {
+            const mathBlocks = [];
+            const markdownWithCallouts = renderCallouts(markdown);
+            const protectedMarkdown = protectMath(markdownWithCallouts, mathBlocks);
+            let html = marked.parse(protectedMarkdown);
+
+            mathBlocks.forEach(function(math, index) {
+                html = html.replace(`@@MATH_${index}@@`, math);
+            });
+
+            return html;
+        }
+
+        function protectMath(markdown, mathBlocks) {
+            return markdown
+                .replace(/\$\$([\s\S]+?)\$\$/g, function(match, math) {
+                    const index = mathBlocks.push(`<div class="math-display">\\[${escapeHtml(math.trim())}\\]</div>`) - 1;
+                    return `\n@@MATH_${index}@@\n`;
+                })
+                .replace(/(^|[^$])\$([^\n$]+?)\$(?!\$)/g, function(match, prefix, math) {
+                    const index = mathBlocks.push(`<span class="math-inline">\\(${escapeHtml(math.trim())}\\)</span>`) - 1;
+                    return `${prefix}@@MATH_${index}@@`;
+                });
+        }
+
+        function renderCallouts(markdown) {
+            return markdown.replace(/(^|\n)> \[!(\w+)\]\s*([^\n]*)\n((?:>.*(?:\n|$))*)/gi, function(match, leadingNewline, type, title, body) {
+                const calloutType = type.toLowerCase();
+                const calloutTitle = title.trim() || calloutType;
+                const calloutBody = body
+                    .trimEnd()
+                    .split('\n')
+                    .map(function(line) {
+                        return line.replace(/^>\s?/, '');
+                    })
+                    .join('\n');
+
+                return `${leadingNewline}<div class="callout callout-${escapeHtml(calloutType)}">
+<div class="callout-title">${escapeHtml(calloutTitle)}</div>
+<div class="callout-content">
+${renderMarkdown(calloutBody).trim()}
+</div>
+</div>
+`;
+            });
+        }
+
+        function escapeHtml(value) {
+            return value.replace(/[&<>"']/g, function(character) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[character];
+            });
+        }
     </script>
 </body>
 </html>
