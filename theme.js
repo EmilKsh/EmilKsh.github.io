@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     renderProjectTags();
+    setupTerminalName();
     setupProjectReveal();
     setupSectionRail();
 
@@ -182,6 +183,89 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
         return Array.from(new Set(phraseTags.concat(wordTags))).slice(0, 3);
+    }
+
+    function setupTerminalName() {
+        const terminalName = document.querySelector('[data-terminal-name]');
+        if (!terminalName) return;
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const baseName = 'Emil Keshishian';
+        const shellName = 'Emilk.sh';
+        const spinnerFrames = ['/', '-', '\\', '|', '/', '-', '\\', '|'];
+        const glitchFrames = [
+            '0x45_m1l::ksh',
+            'rm -rf ./ordinary',
+            'ksh@sim:~$ ???',
+            'ERR_SIG_GRAPHICS',
+            './emilk.sh --unstable',
+            '01001011::mesh'
+        ];
+
+        const wait = function(ms) {
+            return new Promise(function(resolve) {
+                window.setTimeout(resolve, ms);
+            });
+        };
+
+        const typeText = async function(text, delay) {
+            for (let index = 0; index < text.length; index += 1) {
+                terminalName.textContent += text[index];
+                await wait(delay);
+            }
+        };
+
+        const deleteTo = async function(targetLength, delay) {
+            while (terminalName.textContent.length > targetLength) {
+                terminalName.textContent = terminalName.textContent.slice(0, -1);
+                await wait(delay);
+            }
+        };
+
+        const replaceWith = async function(text, delay) {
+            await deleteTo(0, delay);
+            await typeText(text, delay);
+        };
+
+        if (reduceMotion.matches) {
+            terminalName.textContent = baseName;
+            return;
+        }
+
+        runTerminalLoop();
+
+        async function runTerminalLoop() {
+            while (true) {
+                terminalName.textContent = '';
+                await typeText(baseName, 58);
+                await wait(680);
+
+                await deleteTo(4, 42);
+                await wait(180);
+                await typeText('k.sh', 70);
+                await wait(850);
+
+                for (let frame = 0; frame < spinnerFrames.length; frame += 1) {
+                    terminalName.textContent = shellName + ' ' + spinnerFrames[frame];
+                    await wait(135);
+                }
+
+                await replaceWith('Simulations', 48);
+                await wait(820);
+
+                await replaceWith('Computer graphics', 42);
+                await wait(820);
+
+                await deleteTo(0, 34);
+                for (let index = 0; index < glitchFrames.length; index += 1) {
+                    terminalName.textContent = glitchFrames[index];
+                    await wait(index < glitchFrames.length - 1 ? 130 : 900);
+                }
+
+                terminalName.textContent = '';
+                await wait(2300);
+            }
+        }
     }
 
     function setupProjectReveal() {
