@@ -3,32 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emil Keshishian - First Article</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <title>Mechanical Constraints - Emil Keshishian</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="article-reader-page">
     <canvas id="myCanvas"></canvas>
     <script src="../2DBallsWithCollision.js"></script>
+    <script src="../theme.js"></script>
 
-    <header>
-        <div style="padding: 20px; text-align: center;">
-            <h1>First Article</h1>
-            <p><a href="../articles.html" style="color: #ffc107;"><i class="fa fa-arrow-left"></i> Back to Articles</a> | <a href="../index.html" style="color: #ffc107;"><i class="fa fa-home"></i> Back to Homepage</a></p>
+    <header class="article-reader-header">
+        <div class="header-container article-reader-header-container">
+            <div class="article-reader-title-block">
+                <span class="profile-kicker">Mechanics notes</span>
+                <h1>Mechanical constraints</h1>
+                <p>Holonomic and non-holonomic constraints, Jacobians, virtual work, and acceleration-level corrections.</p>
+            </div>
+
+            <nav class="header-links article-reader-actions" aria-label="Article links">
+                <a class="article-tab" href="../articles.html"><i class="fa fa-arrow-left"></i><span>Articles</span></a>
+                <a class="article-tab" href="../index.html"><i class="fa fa-home"></i><span>Home</span></a>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
         </div>
     </header>
 
-    <div class="container article-container">
-        <section class="section article-section">
-            <div id="article-content" class="markdown-body">
-                <!-- Markdown content will be rendered here -->
+    <main class="container article-reader-container">
+        <section class="article-reader-hero" aria-label="Article summary">
+            <div class="article-reader-summary">
+                <span class="articles-eyebrow">May 2026</span>
+                <h2>Constraints as geometry, forces, and equations.</h2>
+            </div>
+            <div class="article-reader-meta" aria-label="Article metadata">
+                <span>Mechanics</span>
+                <span>Simulation</span>
+                <span>Math notes</span>
             </div>
         </section>
-    </div>
 
-    <footer>
-        <p>Last Updated May 2026</p>
+        <article class="article-reader-shell">
+            <aside class="article-reader-sidebar" aria-label="Article details">
+                <span class="article-sidebar-label">Article details</span>
+                <dl class="article-sidebar-list">
+                    <div>
+                        <dt>Updated</dt>
+                        <dd>May 2026</dd>
+                    </div>
+                    <div>
+                        <dt>Format</dt>
+                        <dd>Markdown + MathJax</dd>
+                    </div>
+                    <div>
+                        <dt>Topic</dt>
+                        <dd>Constraints</dd>
+                    </div>
+                </dl>
+                <a href="#article-content">Start reading</a>
+            </aside>
+
+            <section class="article-section article-reader-section">
+                <div id="article-content" class="markdown-body">
+                    <!-- Markdown content will be rendered here -->
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="article-reader-footer">
+        <p>Last updated May 2026</p>
         <button onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Back to Top</button>
     </footer>
 
@@ -60,8 +105,9 @@ $$
 C(q) = x^2+y^2+z^2-R^2=0
 $$
 Although holonomic constraints limit the configuration space itself, it is still possible to get velocity constraints by calculating the derivative as:
-
-	\frac{d}{dt}C(q,t)=\frac{\partial C}{\partial q}\dot{q}+\frac{\partial C}{\partial t}
+$$
+\frac{d}{dt}C(q,t)=\frac{\partial C}{\partial q}\dot{q}+\frac{\partial C}{\partial t}
+$$
 
 where $\frac{\partial C}{\partial q}=J(q,t)$ is called the **Jacobian** of the constraint (the Jacobian is orthogonal to the surface of the hyperplane of the constraint). For time-independent constraints  the Jacobian is written as $J(q)$ hence:
 $$
