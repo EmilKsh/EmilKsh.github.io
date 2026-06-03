@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tensors - Emil Keshishian</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="article-reader-page">
+    <canvas id="myCanvas"></canvas>
+    <script src="../2DBallsWithCollision.js"></script>
+    <script src="../theme.js"></script>
+
+    <header class="article-reader-header">
+        <div class="header-container article-reader-header-container">
+            <div class="article-reader-title-block">
+                <span class="profile-kicker">Math notes</span>
+                <h1>Tensors</h1>
+                <p>A compact tensor algebra and tensor calculus cheat sheet.</p>
+            </div>
+
+            <nav class="header-links article-reader-actions" aria-label="Article links">
+                <a class="article-tab" href="../articles.html"><i class="fa fa-arrow-left"></i><span>Articles</span></a>
+                <a class="article-tab" href="../index.html"><i class="fa fa-home"></i><span>Home</span></a>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container article-reader-container">
+        <section class="article-reader-hero" aria-label="Article summary">
+            <div class="article-reader-summary">
+                <span class="articles-eyebrow">Mar 2025</span>
+                <h1>Tensor notation, operations, invariants, and calculus.</h1>
+            </div>
+            <div class="article-reader-meta" aria-label="Article metadata">
+                <span>Tensors</span>
+                <span>Continuum mechanics</span>
+                <span>Math notes</span>
+            </div>
+        </section>
+
+        <article class="article-reader-shell">
+            <aside class="article-reader-sidebar" aria-label="Article details">
+                <span class="article-sidebar-label">Article details</span>
+                <dl class="article-sidebar-list">
+                    <div>
+                        <dt>Updated</dt>
+                        <dd>Mar 2025</dd>
+                    </div>
+                    <div>
+                        <dt>Format</dt>
+                        <dd>Markdown + MathJax</dd>
+                    </div>
+                    <div>
+                        <dt>Topic</dt>
+                        <dd>Tensors</dd>
+                    </div>
+                </dl>
+                <a href="#article-content">Start reading</a>
+            </aside>
+
+            <section class="article-section article-reader-section">
+                <div id="article-content" class="markdown-body">
+                    <!-- Markdown content will be rendered here -->
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="article-reader-footer">
+        <p>Last updated Mar 2025</p>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Back to Top</button>
+    </footer>
+
+    <script async src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script>
+        const articleContent = document.getElementById('article-content');
+
+        const articleMarkdown = String.raw`
+## Nomenclature 
+
+- a or A: scalar
+- $\underline{a}$ : vector
+- $\underline{A}$ : Tensor
+- $[A]$ : Matrix
+## Tensors
+
+The definition of a tensor is $\underline{A}=A_{ij}  e_i\otimes e_j$
+$\otimes$ is called the Dyadic or ban(/ba:n/) product which is an operator that constructs a tensor from two vectors:
+$$
+a = \{1, 2\}, b=\{3,4\} \rightarrow a\otimes 
+b=
+\begin{pmatrix}
+	1\times3 & 1\times4 \\
+	2\times3 & 2\times4
+\end{pmatrix}
+$$
+or 
+$$
+a\otimes b = a_i  b_j \ e_i\otimes e_j
+$$
+
+note: $a\otimes b$ is called a ban b.
+
+
+> [!warning] Not all matrixes can be written as the dyadic or outer product of two vectors
+> The outer product creates matrices of rank 1, but any matrix can be written as the sum of outer products
+
+Hence tensors of type $A_{ij} \ e_i\otimes e_j$ are a specific type of tensors.
+
+For these type of tensors we have some definitions:
+
+### Tensor times vector
+This defines the way a tensor operates on a vector, so:
+
+$$
+(a\otimes b).c = (b.c)a
+$$
+
+> [!tip] Finding tensor elements from a different set of basis vectors utilizes the following:
+
+$$
+A_{ij} = e_i \ . \underline{A} \ e_j
+$$
+proof:
+$$
+\begin{aligned}
+	e_i \ . \underline{A} \ e_j =& \ e_i .(A_{mn}\ e_m\otimes e_n)e_j\\
+	=&\ e_i . A_{mn} (e_n.e_j)e_m \\
+	=&\ e_i . A_{mn} \delta_{nj}e_m \\
+	=&\ e_i . A_{mj} e_m = A_{mj} e_i . e_m = A_{mj} \delta_{im}\\
+	=&\ A_{ij} 
+\end{aligned}
+$$
+
+
+> [!NOTE] The outer product of two 2nd order tensors is a 4th order tensor
+$\underline{A}\otimes\underline{B}=\underline{C}_{ijkl}$ where $\underline{C}_{ijkl} = C_{ijkl}e_i\otimes e_j\otimes e_k \otimes e_l$
+> 
+
+
+> [!NOTE] Some useful rules:
+>  If we have $\underline{A}\underline{a}=\underline{b}$ then we expect $A_{ij}a_j = b_i$.
+>  If we have $\underline{A}\underline{B}=\underline{C}$ then we expect $A_{ik}B_{kj} = C_{ij}$.
+> 
+> These derived from the outer product rule of tensors (the second one is a little bit tricky and a vector should be multiplied in both sides)  
+
+### Tensor times Tensor
+It could be realized as a rule that:
+
+> [!note] Important 
+> $(a\otimes b)(c\otimes d) = (b.c)(a\otimes d)$
+
+The second rule about matrix multiplication earlier could also be derived by this.
+
+
+### Tensor Transpose
+
+$$
+\begin{aligned}
+\underline{A}^T \underline{B} = \underline{C} \rightarrow C_{ij} = A_{ki}B_{kj}\\
+\underline{A} \underline{B}^T = \underline{C} \rightarrow C_{ij} = A_{ik}B_{jk}\\
+\end{aligned}
+$$
+
+
+> [!NOTE] Intrinsic definition of transpose
+> $$
+> \underline{a} . \underline{A}\ \underline{b} = \underline{A}^T \underline{a}.\underline{b}
+> $$
+
+The intrinsic definition always holds, even for non-orthonormal basis vectors.
+
+
+> [!caution] $A_{ij}^T = A_{ji}$ but NOT Always
+> If the basis function of $\underline{A}$ are not from the same set of basis vectors then the above equation does not hold.
+
+- $(\underline{a}\otimes\underline{b})^T = \underline{b}\otimes\underline{a}$
+- $\underline{A}^T=A_{ji}\ e_i\otimes e_j$
+- $\underline{A}^T \underline{a} = \underline{b} \rightarrow b_i = A_{ji} a_j$
+
+### Skew-symmetric Tensor
+
+A skew-symmetric tensor is a tensor to whom this applies: $\underline{A}^T = - \underline{A}$ and $A_{ij} = -A_{ji}$.
+
+All tensors could be written as a sum of their symmetric and skew-symmetric parts:
+$$
+\begin{aligned}
+	symmetric\ part:&\\
+	&\underline{A}^{sym} = \frac{1}{2} (\underline{A}+\underline{A}^T)\\
+	skew-symmetric\ part:&\\
+	&\underline{A}^{skew} = \frac{1}{2} (\underline{A}-\underline{A}^T)\\
+	Any\ tensor \underline{A}:&\\
+	&\underline{A} = \underline{A}^{sym} + \underline{A}^{skew}
+\end{aligned}
+$$
+### Triple Product
+The triple product of three vectors is defined to be:
+$$
+[a,b,c] = a.(b\times c)
+$$
+this means that if a, b and c are linearly dependent vectors then their triple product is 0, and if they are orthonormal then their triple product is equal to 1 or -1.
+
+> [!NOTE]
+> The triple product has an expansion property:
+> $$
+> [a,b_1-b_2,c] = [a,b_1,c] - [a,b_2,c]
+> $$
+
+---
+# Invariants
+Three invariants are defined for tensors, and these are called invariants because no matter what basis vectors are used, with the same elements of the tensor the invariants stay the same.
+
+$$
+I_A = \frac{[\underline{A}\underline{a}, \underline{b}, \underline{c}] + [\underline{a}, \underline{A}\underline{b}, \underline{c}] + [\underline{a}, \underline{b}, \underline{A}\underline{c}]}{[\underline{a}, \underline{b}, \underline{c}]} = tr[A]=A_{ii}=trace
+$$
+$$
+II_A = \frac{[\underline{A}\underline{a}, \underline{A}\underline{b}, \underline{c}] + [A{}\underline{a},\underline{b}, \underline{A}\underline{c}] + [\underline{a}, \underline{A}\underline{b}, \underline{A}\underline{c}]}{[\underline{a}, \underline{b}, \underline{c}]} = \frac{1}{2}[(A_{ii})^T-A_{ij}A_{ji}]=no\ special\ name
+$$
+$$
+III_A = \frac{[\underline{A}\underline{a}, \underline{A}\underline{b}, \underline{A}\underline{c}]}{[\underline{a}, \underline{b}, \underline{c}]}=det[A]=e_{ijk}A_{i1}A_{j2}A_{k3} = determinant
+$$
+
+---
+### Inner/dot/scalar product of two tensors
+
+$$\underline{A}\underline{B}=tr[\underline{A}\underline{B}^T] \ (intrinsic)$$
+$$
+\underline{A}\underline{B}^T=\underline{C} \rightarrow C_{ij}=A_{ik}B_{jk}
+$$
+$$
+tr[\underline{C}]=\underline{C}_{ii}=A_{ik}B_{ik}
+$$
+Tensors have two parts:
+- The spherical part
+- The deviatoric part
+
+Spherical: $\underline{A}=\alpha\underline{I}$
+Deviatoric: $tr[\underline{A}]=0$
+
+> [!NOTE]
+> The spherical part of a tensor $\underline{A}$ is $\underline{A}^{sph}=\frac{1}{3}tr[\underline{A}]\underline{I}$
+> and the deviatoric part of a tensor $\underline{A}$ is $\underline{A}^{dev}=\underline{A}-\underline{A}^{sph}$
+
+
+### Inverse and Cofactor of Tensors
+
+The inverse of a tensor is defined to be $\underline{A}^{-1}\underline{A}=\underline{A}\underline{A}^{-1}=\underline{I}$.
+
+also $A_{ik}^{-1}A_{kj}=A_{kj}A_{ik}^{-1}=\delta_{ij}$.
+
+
+Cofactor of a tensor: $\underline{A}^\#$ (also called the adjunct) and is intrinsically defined to be:
+$$
+\underline{A}\underline{a}\times\underline{A}\underline{b} = \underline{A}^{\#}(\underline{a}\times\underline{b})
+$$
+So when the inverse of A exists, $\underline{A}^{\#}=det[\underline{A}]\underline{A}^{-T}$.
+
+From the cofactor definition, the inverse of A could be computed as:
+$$
+\underline{A} = \frac{1}{det[\underline{A}]}\underline{A}^{\#,T}
+$$
+
+- $\underline{A}^{\#,T}$ is called the adjugate.
+
+
+> [!NOTE] Cofactor invariant
+> $II_{\underline{A}}=tr[\underline{A}^{\#}]$
+
+# Eigenvalue Problem
+
+If $\underline{A}\underline{v}=\lambda \underline{v}$, $\underline{v}$ is called the eigenvector and $\lambda$ is called the eigenvalue.
+
+To find the eigenvalue and the eigenvector the non-trivial solution of the equation should be found. 
+
+The non-trivial solutions for $(\underline{A}-\lambda\underline{I})\underline{v}=0$ are as:
+$$
+\lambda^3-I_A\lambda^2+II_A\lambda-III_A=0
+$$
+  
+
+
+### The Cayley-Hamilton Theorem
+States that each tensor satisfies it's own characteristic equation. And from this theorem the inverse of a tensor A can be obtained as:
+$$
+A^3-I_AA^2+II_AA-III_A=0 \xrightarrow{\times A^{-1}}A^2-I_AA+II_A=III_AA^{-1}
+$$
+$$
+\rightarrow A^{-1}=\frac{A^2-I_AA+II_A}{III_A}
+$$
+
+
+> [!Important] 
+> For any symmetric tensor A, we have $\lambda_i \in \mathbb{R}$ and $v_i \in \mathbb{R}^3$, and:
+> $$
+> if\ \lambda_i!=\lambda_j \rightarrow v_i,\ v_j\ are\ orthonormal
+> $$
+
+> [!Important]
+> This also states that: $\underline{A}=\sum_{i=1}^{3}{\lambda_i\ v_i\otimes v_i}$. This is called the Spectral Decomposition of tensor A.
+
+
+### Positive definite tensors
+
+If all eigenvalues of a tensor are positive and non-zero, that tensor is positive definite, if some of the eigenvalues are zero then it is positive semi-definite, and negative for the reverse.
+
+Alternatively, symmetric tensor A is positive definite if $\underline{a}.\underline{A} \underline{a}>=0,\ \forall \underline{a}$.
+
+Also:
+- if tensor A is positive definite $\rightarrow A^{\frac{1}{2}}=\Sigma\sqrt{\lambda_i}\ v_i\otimes v_i$
+- if tensor A is non-semi def (positive or negative) $\rightarrow A^{-1}=\Sigma \lambda^{-1}\ v_i\otimes v_i$
+
+### The invariants in terms of the eigenvalues
+
+- $I_A = \lambda_1+\lambda_2+\lambda_3$
+- $II_A=\lambda_{1}\lambda_2+\lambda_1\lambda_3+\lambda_2\lambda_3$
+- $III_A=\lambda_1\lambda_2\lambda_3$
+
+### Axial Vector
+A skew-symmetric tensor has 3 independent components, so a vector is associated with it such that:
+$$
+\underline{W}\ \underline{v}=\underline{v}' \rightarrow \underline{w}\times \underline{v}=\underline{v}'\rightarrow \underline{W}\ \underline{v}=\underline{w}\times \underline{v}
+$$
+The reason there's a cross product between w and v is that a vector can be generated from two vectors not by multiplying but by using the outer product.
+
+---
+
+### Orthogonal Tensors
+
+An orthogonal tensor is a tensor that: $Q^T=Q^{-1}$.
+
+$$
+\begin{equation}
+det[Q]=\begin{cases}
++1, \ \text{it is called a proper tensor}  \\ -1, \ \text{it is called a improper tensor}
+\end{cases}
+\end{equation}
+$$
+
+> [!NOTE]
+> An orthogonal proper tensor corresponds to physical rotation and an orthogonal improper tensor corresponds to reflection.
+> 
+
+### Polar decomposition
+
+Any invertible tensor F admits the decomposition
+$$\underline{F}=\underline{V}\underline{R}\ ,\ \underline{F}=\underline{R}\underline{U}$$
+where V and U are symmetric positive definite tensors and R is an orthogonal tensor. and the left one (with the symmetric tensor on it's left) is called the left and the right one is called the right.
+
+
+### Change of Basis
+if we have two sets of orthonormal basis, $e_i$ and $e_i'$ where:
+$$e_i'=\underline{Q}e_i\rightarrow \text{if Q is given}$$
+Where Q is an orthonormal tensor, meaning it rotates basis $e_i$ to become basis $e_i'$.
+
+If $e_i$ and $e_i'$ are given and we want to find Q:
+$$
+\underline{Q}=Q_{mn}e_m\otimes e_n,\ Q_{mn}=e_m.\underline{Q}e_n\xrightarrow{\underline{Q}e_n=e_n'}Q_{mn}=e_m.e_n'
+$$
+if a tensor's basis are from one set of basis vectors then:
+$$
+[Q]=\left[\begin{array}{cc}
+Q_{11} & Q_{12} & ...\\
+ & Q_{22}\\
+ & & .\\
+ \end{array}\right] \xrightarrow{if}\underline{e}_i\otimes\underline{e}_j
+$$
+and if not then:
+$$
+[Q]=\left[\begin{array}{cc}
+1 & 0 & ...\\
+0 & 1 & ...\\
+&  &.
+\end{array}\right]
+\xrightarrow{if}\underline{e}_i'\otimes\underline{e}_j
+$$
+
+> [!attention] 
+> Not all tensors with diagonal elements are diagonal
+
+
+**Basis rotation note.** If only the basis are rotated and the vector is not rotated then:
+$$
+\underline{e}_i\xrightarrow{\underline{Q}}\underline{e}_i' \quad \text{and} \quad \underline{b}\xrightarrow{[Q]}\underline{a}
+$$
+But if the vector is also rotating with the basis then:
+$$
+\underline{e}_i\xrightarrow{\underline{Q}}\underline{e}_i' \quad \text{and} \quad \underline{b}\xrightarrow{[Q]^T}\underline{a}
+$$
+
+For tensors, one can derive similar results:
+1. Change of basis: $\underline{A}=A_{ij}\underline{e}_i\otimes \underline{e}_j=A_{ij}'\underline{e}_i'\underline{e}_j'$
+	$[A']=[Q^T][A][Q]$ or $A_{ij}'=Q_{ik}^TA_{kl}Q_{lj}=Q_{ki}A_{kl}Q_{lj}$
+
+2. Rotation: $\underline{B}=\underline{Q}\underline{A}\underline{Q}^T$
+	 $[B]=[Q][A][Q^T]$, or $R_{ij}=Q_{im}A_{mn}Q_{nj}^T=Q_{im}A_{mn}Q_{jn}$.
+
+## Tensor Calculus
+We have Scalar, Vector and Tensor functions.
+
+- $\Phi(\underline{x}, t)$, e.g. temperature
+- $\underline{v}(\underline{x}, t)$, e.g. velocity
+- $\underline{I}(\underline{x}, t)$, e.g. stress
+
+### Gradient
+$$
+\begin{align}
+&\nabla\Phi =grad[\Phi] = \frac{\partial \Phi}{\partial x_j}=\Phi_{,j}\\
+&\nabla v = grad[v] = \frac{\partial v_i}{\partial x_j}=v_{i,j}\\
+&\nabla I = grad[I] = \frac{\partial I_{i,j}}{\partial x_k}=I_{ij,k}\\
+\end{align}
+$$
+### Divergence
+$$
+\begin{align}
+&\nabla.v=div[v]=\frac{\partial v_i}{\partial x_i}=v_{i,i}\\
+&\nabla.I=div[I]=\frac{\partial I_{i,j}}{\partial x_i}\underline{e}_k=I_{ij,i}\underline{e}_i\\
+\end{align}
+$$
+
+### Curl
+
+$$
+\begin{align}
+&\nabla\times v= curl[v] = e_{ijk}\frac{\partial}{\partial x_k} \underline{v}_i\underline{e}_j=e_{ijk}v_{i,k}\underline{e}_j\\
+&[\nabla\times I]_{ij}=curl[I]_{ij}=row-wise\ curl=e_{ijk}\frac{\partial}{\partial x_k}I_{ij}\ e_i\otimes e_j
+\end{align}
+$$
+
+### Integration
+
+There's  a stencil to use:
+$$
+\text{Divergence Rule: }\int_D{(...)_{,k} dv}=\int_{\partial D}{(...)n_kda}
+$$
+
+---
+### Jacobi's Formula
+
+For any function $A(\tau)$:
+
+$$
+\frac{d}{d\tau}det\underline{A}=det\underline{A}\ tr[\frac{d\underline{A}}{d\tau}\underline{A}^{-1}]
+$$
+
+        `;
+
+        articleContent.innerHTML = renderMarkdown(articleMarkdown);
+        restoreEscapedCalloutElements(articleContent);
+
+        window.typesetArticleMath = function() {
+            if (!window.MathJax || !MathJax.startup || !MathJax.typesetPromise) return;
+            MathJax.startup.promise.then(() => MathJax.typesetPromise([articleContent]));
+        };
+
+        const mathJaxScript = document.querySelector('script[src*="mathjax"]');
+        if (mathJaxScript) {
+            mathJaxScript.addEventListener('load', window.typesetArticleMath);
+        }
+        window.typesetArticleMath();
+
+        function renderMarkdown(markdown) {
+            const mathBlocks = [];
+            const markdownWithCallouts = renderCallouts(markdown);
+            const protectedMarkdown = protectMath(markdownWithCallouts, mathBlocks);
+            const hasMarked = window.marked && window.marked.parse;
+            const parser = hasMarked ? window.marked.parse : fallbackMarkdown;
+            let html = parser(protectedMarkdown);
+
+            if (!hasMarked) {
+                html = restoreFallbackCallouts(html);
+            }
+
+            mathBlocks.forEach(function(math, index) {
+                html = html.replace(`@@MATH_${index}@@`, math);
+            });
+
+            return html;
+        }
+
+        function restoreFallbackCallouts(html) {
+            return html.replace(
+                /(?:<p>)?&lt;div class="(callout [^"]+)"&gt;\s*&lt;div class="callout-title"&gt;([\s\S]*?)&lt;\/div&gt;\s*&lt;div class="callout-content"&gt;<\/p>\s*([\s\S]*?)\s*<p>&lt;\/div&gt;\s*&lt;\/div&gt;<\/p>/g,
+                '<div class="$1"><div class="callout-title">$2</div><div class="callout-content">$3</div></div>'
+            );
+        }
+
+        function restoreEscapedCalloutElements(root) {
+            Array.from(root.querySelectorAll('p')).forEach(function(paragraph) {
+                const singleParagraphCallout = paragraph.innerHTML.trim().match(/^&lt;div class="(callout [^"]+)"&gt;\s*&lt;div class="callout-title"&gt;([\s\S]*?)&lt;\/div&gt;\s*&lt;div class="callout-content"&gt;\s*([\s\S]*?)\s*&lt;\/div&gt;\s*&lt;\/div&gt;$/);
+                if (singleParagraphCallout) {
+                    const callout = document.createElement('div');
+                    const title = document.createElement('div');
+                    const content = document.createElement('div');
+
+                    callout.className = singleParagraphCallout[1];
+                    title.className = 'callout-title';
+                    title.textContent = singleParagraphCallout[2];
+                    content.className = 'callout-content';
+                    content.innerHTML = singleParagraphCallout[3];
+                    callout.appendChild(title);
+                    callout.appendChild(content);
+                    paragraph.replaceWith(callout);
+                    return;
+                }
+
+                const opener = paragraph.textContent.trim().match(/^<div class="(callout [^"]+)">\s*<div class="callout-title">([\s\S]*?)<\/div>\s*<div class="callout-content">$/);
+                if (!opener) return;
+
+                const callout = document.createElement('div');
+                const title = document.createElement('div');
+                const content = document.createElement('div');
+                let current = paragraph.nextElementSibling;
+                let closer = null;
+
+                callout.className = opener[1];
+                title.className = 'callout-title';
+                title.textContent = opener[2];
+                content.className = 'callout-content';
+
+                while (current) {
+                    const next = current.nextElementSibling;
+                    if (current.tagName === 'P' && current.textContent.trim() === '</div> </div>') {
+                        closer = current;
+                        break;
+                    }
+                    content.appendChild(current);
+                    current = next;
+                }
+
+                if (!closer) return;
+
+                callout.appendChild(title);
+                callout.appendChild(content);
+                paragraph.replaceWith(callout);
+                closer.remove();
+            });
+        }
+
+        function fallbackMarkdown(markdown) {
+            const lines = markdown.trim().split('\n');
+            const html = [];
+            let paragraph = [];
+            let listItems = [];
+
+            function flushParagraph() {
+                if (!paragraph.length) return;
+                html.push(`<p>${renderInline(paragraph.join(' '))}</p>`);
+                paragraph = [];
+            }
+
+            function flushList() {
+                if (!listItems.length) return;
+                html.push(`<ul>${listItems.map(function(item) {
+                    return `<li>${renderInline(item)}</li>`;
+                }).join('')}</ul>`);
+                listItems = [];
+            }
+
+            lines.forEach(function(line) {
+                const trimmed = line.trim();
+
+                if (!trimmed) {
+                    flushParagraph();
+                    flushList();
+                    return;
+                }
+
+                if (trimmed === '---') {
+                    flushParagraph();
+                    flushList();
+                    html.push('<hr>');
+                    return;
+                }
+
+                if (/^<\/?[a-z][\s>]/i.test(trimmed) || trimmed.startsWith('@@MATH_')) {
+                    flushParagraph();
+                    flushList();
+                    html.push(trimmed);
+                    return;
+                }
+
+                const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+                if (heading) {
+                    flushParagraph();
+                    flushList();
+                    html.push(`<h${heading[1].length}>${renderInline(heading[2])}</h${heading[1].length}>`);
+                    return;
+                }
+
+                const listItem = trimmed.match(/^-\s+(.+)$/);
+                if (listItem) {
+                    flushParagraph();
+                    listItems.push(listItem[1]);
+                    return;
+                }
+
+                flushList();
+                paragraph.push(trimmed);
+            });
+
+            flushParagraph();
+            flushList();
+            return html.join('\n');
+        }
+
+        function renderInline(value) {
+            return escapeHtml(value)
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\[\[([^\]]+)\]\]/g, '$1');
+        }
+
+        function protectMath(markdown, mathBlocks) {
+            return markdown
+                .replace(/\$\$([\s\S]+?)\$\$/g, function(match, math) {
+                    const index = mathBlocks.push(`<div class="math-display">\\[${escapeHtml(math.trim())}\\]</div>`) - 1;
+                    return `\n@@MATH_${index}@@\n`;
+                })
+                .replace(/(^|[^$])\$([^\n$]+?)\$(?!\$)/g, function(match, prefix, math) {
+                    const index = mathBlocks.push(`<span class="math-inline">\\(${escapeHtml(math.trim())}\\)</span>`) - 1;
+                    return `${prefix}@@MATH_${index}@@`;
+                });
+        }
+
+        function renderCallouts(markdown) {
+            return markdown.replace(/(^|\n)> \[!(\w+)\]\s*([^\n]*)\n((?:>.*(?:\n|$))*)/gi, function(match, leadingNewline, type, title, body) {
+                const calloutType = type.toLowerCase();
+                const calloutTitle = title.trim() || calloutType;
+                const calloutBody = body
+                    .trimEnd()
+                    .split('\n')
+                    .map(function(line) {
+                        return line.replace(/^>\s?/, '');
+                    })
+                    .join('\n');
+
+                return `${leadingNewline}<div class="callout callout-${escapeHtml(calloutType)}">
+<div class="callout-title">${escapeHtml(calloutTitle)}</div>
+<div class="callout-content">
+${renderMarkdown(calloutBody).trim()}
+</div>
+</div>
+`;
+            });
+        }
+
+        function escapeHtml(value) {
+            return value.replace(/[&<>"']/g, function(character) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[character];
+            });
+        }
+    </script>
+</body>
+</html>
